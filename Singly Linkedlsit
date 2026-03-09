@@ -1,0 +1,230 @@
+#include <iostream>
+using namespace std;
+
+struct Node{
+    int data;
+    Node *next;
+};
+
+Node *list = NULL; 
+
+//Search
+Node* Search(int value){
+   // Node* cur = list;
+    if(list == NULL){
+        cout<<" Empty is List!\n";
+        return NULL;
+    }
+    Node* cur = list;
+    int index = 0;
+    while(cur != NULL){
+      if(cur->data == value){
+        cout<<"Number Found at:" << index <<endl;
+        return cur;
+       }
+    cur= cur->next;
+    index++;
+    }
+   cout<<"Number " << value << "not found int the list!\n";
+   return NULL;
+}
+
+//Insert
+void Insert(int value){
+    if(Search(value)){
+        cout<< "Duplicate value, Already Exist!\n";
+        //return;    
+    }
+  Node *temp= (Node*)malloc(sizeof(Node));
+    temp->data = value;
+    temp->next = NULL;
+
+    if(list == NULL){
+        list = temp;
+    }
+    else{
+        Node *cur = list;
+        while(cur -> next != NULL){
+            cur = cur->next;
+        }
+        cur->next = temp;
+    }
+}
+
+//Delete Duplicate
+void DeleteDuplicate(){
+    Node *cur = list;
+    while(cur != NULL){   //picks one value
+        Node *prev = cur;
+        Node *temp = cur->next;    //usky baad wali node check karayga
+        while(temp != NULL){
+            if(cur->data == temp->data){
+                prev->next = temp->next;
+                free(temp);
+                temp = prev->next;
+            }
+            else{
+                prev = prev->next;
+                temp = temp->next;
+            }
+        }
+         cur = cur->next;
+    }
+}
+
+
+//Delete
+void Delete(int value){   
+    //count duplicates while traversing
+    int count = 0;
+    Node *temp = list;
+    while(temp != NULL){
+        if(temp->data == value){
+            count++;
+        }
+        temp = temp->next;
+    }
+    if(count > 0){
+        cout<< "Duplicate value,Already Exist!" << count << "times\n";
+        return;
+    }
+    
+
+    if (list == NULL){
+        cout << "List Is Empty!\n";
+        return;
+    }
+       else{ 
+        if(value == list->data){
+            Node* temp = list;  //save pointer to delete
+            list= list->next;
+            free(temp);
+            cout<< "deleted node with value" << value << endl;
+            return;
+        }
+
+        Node *prev = list;   //For other than 1st element
+        Node *cur= list->next;
+        while(cur != NULL){
+            if(value == cur->data){
+                prev->next = cur->next;
+                free(cur);
+                 cout<< "Deleted node with value" << value << endl;
+                return;
+            }
+            cur = cur->next;
+            prev = prev->next;
+        }
+    }
+    cout<< value << "Not found in the list \n";
+}
+
+//Display
+void Display(){
+    if(list == NULL){
+        cout << "List Is Empty!\n";
+        return;
+    }
+    Node *cur = list;
+    while(cur != NULL){
+        cout<< cur->data;
+        cout<< "->";
+        cur = cur->next;
+    }
+     cout<<endl;
+}
+
+//Forward Display
+void forwardDisplay(Node* list){
+    if(list == NULL){
+        return;
+    }
+    cout<< list->data;
+    if(list->next != NULL){
+        cout<< "->";
+    }
+    forwardDisplay(list->next);
+}
+
+//BackwardDisplay
+void BackwardDisplay(Node* list){
+    if(list == NULL){
+      return;
+    } 
+    BackwardDisplay(list->next);
+    cout<< list->data;
+    if(list->next != NULL){
+        cout<< "<-";
+    }else{
+        cout <<endl;
+    }
+}
+
+
+
+int main(){
+
+    while(true){      //Program will run until we exit
+      cout<<"-------SINGLY LINKED LIST-----\n";
+       cout<<"1- Insert\n";
+       cout<<"2- Search\n";
+       cout<<"3- DeleteDuplicate\n";
+       cout<<"4- Delete\n";
+       cout<<"5- Display\n";
+       cout<<"6- Exit\n";
+       cout<<"7- ForwardDisplay\n";
+       cout<<"8- BackwardDisplay\n";
+       int choice;
+       cout<< "ENTER YOUR CHOICE: ";
+       cin>> choice;
+
+       switch (choice){
+       case 1: {int value;
+       cout<<"Enter Value To Insert:";
+       cin>> value;
+       Insert(value);
+       break;
+       }
+
+       case 2: {
+        int value;
+        cout<< "Enter value To Search: ";
+        cin>> value;
+        Search(value);
+        break;
+       }
+
+       case 3:{
+        DeleteDuplicate();
+        break;
+       }
+
+        case 4: {int value;
+        cout<<"Enter value to Delete:";
+        cin>>value;
+        Delete(value);
+        break;
+       }
+
+       case 5: {Display();
+        break;
+       }
+
+       case 6: cout<<"\nExiting.\n";
+            break; 
+
+       case 7: forwardDisplay(list);
+       break;
+
+       case 8: BackwardDisplay(list);
+       break;
+
+       default: cout<< "INVALID CHOICE!\n";
+       }
+    if(choice == 6){
+        break;
+    }
+       
+    } 
+       return 0;
+}
