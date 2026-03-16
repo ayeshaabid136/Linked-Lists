@@ -92,17 +92,84 @@ void display(){
     cout << "NULL" <<endl;
 }
 
+//BubbleSort
+void BubbleSort(Node* list){
+    if(list == NULL){
+        cout<< "list is empty\n";
+        return;
+        bool swapped;
+        do{
+            swapped = false;
+            Node* cur = list;
+            while(cur->next != NULL){
+                if(cur->data > cur->next->data){
+                    int temp = cur->data;
+                    cur->data = cur->next->data;
+                    cur->next->data = temp;
+                    swapped = true;
+                }
+                cur = cur->next;
+            }
+        }
+        while(swapped);
+    }
+}
+
+//SelectionSort
+void SelectionSort(Node* list){
+    if(list == NULL){
+        cout<<"List is empty\n";
+        return;
+    }
+    for(Node* i=list; i; i=i->next){
+        Node* min = i;
+        for(Node* j=i->next; j; j=j->next){
+            if(j->data > min->data){
+                min = j;
+            }
+            int temp = j->data;
+            j->data = min->data;
+            min->data = temp;
+        }
+    }
+}
+
+//InsertionSort
+void InsertionSort(Node* list){
+    if(list == NULL){
+        cout<< "List is empty\n";
+        return;
+    }
+    for(Node* i=list->next; i != NULL; i=i->next){
+        int hold = i->data;
+        Node* gap = list;
+        while(gap != i){
+            if(gap->data > hold){
+                int temp = gap->data;
+                gap->data = hold;
+                hold = temp;
+            }
+            gap = gap->next;
+        }
+        i->data = hold;
+    }
+}
+
 
 
 int main(){
     int choice,value;
 
     while(true){
+        cout<< "--------DoublyLinked List--------\n";
         cout << "1. Insert\n";
         cout << "2. Search\n";
         cout << "3. Delete\n";
         cout << "4. Display\n";
         cout << "5. Exit\n";
+        cout << "6- BubbleSort\n";
+        cout << "7- selectionSort\n";
+        cout << "8- InsertionSort\n";
 
         cout << "ENTER YOUR CHOICE\n";
         cin>> choice;
@@ -131,6 +198,18 @@ int main(){
 
          case 5:  cout<< "Exiting!\n";
                  break;
+
+         case 6:  BubbleSort(list);
+         display();
+         break;
+         
+         case 7: SelectionSort(list);
+         display();
+         break;
+
+         case 8: InsertionSort(list);
+         display();
+         break;
         
          default:  cout << "INVALID CHOICE.!";
             break;
