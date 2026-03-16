@@ -66,6 +66,64 @@ void display(){
     } 
 }
 
+//BubbleSort
+void BubbleSort(Node* list){
+    if(list == NULL){
+        cout<< "list is empty\n";
+        return;
+
+        bool swapped;
+        do{
+            swapped = false;
+            Node* cur = list;
+            while(cur->next != list){
+                if(cur->data > cur->next->data){
+                    int temp = cur->data;
+                    cur->data = cur->next->data;
+                    cur->next->data = temp;
+                    swapped = true;
+                }
+                cur = cur->next;
+            }
+        }
+        while(swapped);
+    }
+}
+
+//selectionSort
+void SelectionSort(Node* list){
+    for(Node* i=list; i; i=i->next){
+        Node* min = i;
+        for(Node* j=i->next; j; j=j->next){
+            if(j->data > min->data){
+                min = j;
+            }
+            int temp = j->data;
+            j->data = min->data;
+            j->data = temp;
+        }
+    }
+}
+
+//InsertionSort
+void InsertionSort(Node* list){
+   Node* i = list->next;
+   while(i != list){
+        int hold = i->data;
+        Node* gap = list;
+        while(gap != i){
+            if(gap->data > hold){
+                int temp = gap->data;
+                gap->data = hold;
+                hold = temp;
+            }
+            gap = gap->next;
+        }
+        i->data = hold;
+        i= i->next;
+    }
+}
+
 //Delete
 int Delete(int value){
     if(list == NULL){
@@ -107,14 +165,18 @@ int Delete(int value){
     cout<< "value not found\n";
 }
 
+
 int main(){
 
     while(true){
        cout<<"1- Insert\n";
        cout<<"2- Search\n";
-       cout<<"3- Delete\n";
-       cout<<"4- Display\n";
-       cout<<"5- Exit\n";
+       cout<<"3- Display\n";
+       cout<<"4- BubbleSort\n";
+       cout<<"5_ SelectionSort\n";
+       cout<<"6- InsertionSort\n";
+       cout<<"7- Delete\n";
+       cout<<"8- Exit\n";
        int choice;
        cout<< "ENTER YOUR CHOICE: ";
        cin>> choice;
@@ -134,7 +196,25 @@ int main(){
         break;
        }
 
-       case 3: {
+       case 3: display();
+        break;
+
+       case 4: {
+        BubbleSort(list);
+        break;
+       }
+
+       case 5: {
+        SelectionSort(list);
+        break;
+       }
+
+       case 6: {
+        InsertionSort(list);
+        break;
+       }
+
+       case 7: {
         int value;
         cout<< "Enter your value to Delete: \n";
         cin>> value;
@@ -142,17 +222,14 @@ int main(){
         break;
        }
 
-       case 4: display();
-        break;
-
-        case 5: cout<< "EXIT!\n";
+        case 8: cout<< "EXIT!\n";
         break;
        
        default: cout << "INVALID CHOICE\n";
         break;
         }
 
-      if(choice == 5){
+      if(choice == 8){
         break;
        }
     }
