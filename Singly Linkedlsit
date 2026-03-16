@@ -25,7 +25,7 @@ Node* Search(int value){
     cur= cur->next;
     index++;
     }
-   cout<<"Number " << value << "not found int the list!\n";
+   cout<<"Number " << value << " not found in the list!\n";
    return NULL;
 }
 
@@ -119,6 +119,67 @@ void Delete(int value){
     cout<< value << "Not found in the list \n";
 }
 
+//BubbleSort
+void BubbleSort(Node* list){
+    if(list == NULL){
+        cout<< "List is empty\n";
+        return;
+    }
+        bool swapped;
+        do{
+            swapped = false;
+            Node *cur = list;
+            while(cur->next != NULL){
+                if(cur->data > cur->next->data){
+                    int temp = cur->data;
+                    cur->data = cur->next->data;
+                    cur->next->data = temp;
+                    swapped = true;
+                }
+                cur= cur->next;
+            }
+        }
+        while(swapped);
+}
+
+//Selection sort
+void SelectionSort(Node* list){
+    if(list == NULL){
+        cout<<"List Is Empty\n";
+        return;
+    }
+    for(Node* i=list; i; i=i->next){
+        Node* min = i;
+        for(Node* j=i->next; j; j=j->next){
+            if(j->data > min->data){
+                min = j;
+            }
+            int temp = j->data;
+            j->data = min->data;
+            min->data = temp;
+        }
+    }
+}
+void InsertionSort(Node* list){
+    if(list == NULL){
+        cout<< "List Is empty\n";
+        return;
+    }
+    for(Node* i=list->next; i != NULL; i=i->next){
+        int hold = i->data;
+        Node* gap = list;
+        while(gap != i){
+            if(gap->data > hold){
+                int  temp = gap->data;
+                gap->data = hold;
+                hold = temp;
+            }
+            gap = gap->next;
+        }
+        i->data = hold;
+    }
+}
+
 //Display
 void Display(){
     if(list == NULL){
@@ -174,6 +235,9 @@ int main(){
        cout<<"6- Exit\n";
        cout<<"7- ForwardDisplay\n";
        cout<<"8- BackwardDisplay\n";
+       cout<<"9- Bubble Sort\n";
+       cout<<"10- Selection Sort\n";
+       cout<<"11- Insertion Sort\n";
        int choice;
        cout<< "ENTER YOUR CHOICE: ";
        cin>> choice;
@@ -217,6 +281,18 @@ int main(){
        break;
 
        case 8: BackwardDisplay(list);
+       break;
+
+       case 9: BubbleSort(list);
+       Display();
+       break;
+
+       case 10: SelectionSort(list);
+       Display();
+       break;
+
+       case 11: InsertionSort(list);
+       Display();
        break;
 
        default: cout<< "INVALID CHOICE!\n";
