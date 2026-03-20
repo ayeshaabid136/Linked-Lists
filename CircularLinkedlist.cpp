@@ -16,7 +16,7 @@ void Insert(int value){
     temp->next = NULL;
     if(list == NULL){
         list = temp;
-        temp->next = list;  //pionter for circular
+        temp->next = list;  //pointer for circular
     }
     else{
         Node *cur = list;
@@ -29,16 +29,17 @@ void Insert(int value){
 }
 
 //search
-int search(int value){
-    Node *cur = list;
-    if(cur == NULL){
-        return -1 ;
+void search(int value){
+    if(list == NULL){
+        cout<<"List is empty\n";
+        return;
     }
+    Node *cur = list;
     int index = 0;
 
     do{
         if(cur->data == value){
-            cout<< "value found at: " << index << "at address: " << cur <<endl;
+            cout<< "value" << value << "found at index: " << index  <<endl;
            // return cur;
         }
         cur = cur->next;
@@ -52,26 +53,27 @@ int search(int value){
 
 //Display
 void display(){
-    Node *cur = list;
-    if(cur == NULL){
+    if(list == NULL){
         cout << "List Is Empty!";
         return;
     }
+     Node *cur = list;
     do{
-       cout << cur->data << " ";
-       cur = cur->next;
+        cout<< cur->data;
+        cout<< "->";
+        cur = cur->next;
     }
-    while(cur != list);{
-    cout<< "\n";
-    } 
+     while(cur != list);
+     cout<<"NULL\n";    
 }
 
+
 //BubbleSort
-void BubbleSort(Node* list){
+void BubbleSort(){
     if(list == NULL){
         cout<< "list is empty\n";
         return;
-
+    }
         bool swapped;
         do{
             swapped = false;
@@ -87,26 +89,37 @@ void BubbleSort(Node* list){
             }
         }
         while(swapped);
-    }
 }
 
-//selectionSort
-void SelectionSort(Node* list){
-    for(Node* i=list; i; i=i->next){
+void SelectionSort(){
+    if(list == NULL) return;
+
+    Node* i = list;
+
+    do{
         Node* min = i;
-        for(Node* j=i->next; j; j=j->next){
-            if(j->data > min->data){
+        Node* j = i->next;
+
+        while(j != list){
+            if(j->data < min->data){   // FIX
                 min = j;
             }
-            int temp = j->data;
-            j->data = min->data;
-            j->data = temp;
+            j = j->next;
         }
-    }
+
+        // FIX: swap yahan hoga
+        int temp = i->data;
+        i->data = min->data;
+        min->data = temp;
+
+        i = i->next;
+
+    }while(i != list);
 }
 
 //InsertionSort
-void InsertionSort(Node* list){
+void InsertionSort(){
+    if(list == NULL) return;
    Node* i = list->next;
    while(i != list){
         int hold = i->data;
@@ -125,44 +138,44 @@ void InsertionSort(Node* list){
 }
 
 //Delete
-int Delete(int value){
+void Delete(int value){
     if(list == NULL){
         cout<< "list is empty\n";
-        return -1 ;
+        return;
     }
+    Node* cur = list;
+
+     //for only one node
     if(list->next == list && list->data == value){
-        //for on;y one node
         free(list);
         list == NULL;
-        return -1;
-    }
-    if(list->data != value){
-        Node *cur = list;
-
-     while(cur->next != list){
-        cur = cur->next;
-     }
-    Node *temp = list;
-    cur->next = list->next;
-    list = list->next;  //move list pointer
-    free(temp);
-    return 0;
+        cout<<"value deleted\n";
+        return;
     }
 
-    //for other elements
-    Node *cur = list;
+    //delete head
+    if(list->data == value){
+        while(cur->next != list){
+            cur= cur->next;
+        }
+        Node* temp = list;
+        cur->next = list->next;
+        list = list->next;
+        free(temp);
+        cout<<"value deleted\n";
+        return;
+    }
     do{
         if(cur->next->data == value){
-            Node *temp = cur->next;
+            Node* temp = cur->next;
             cur->next = temp->next;
             free(temp);
-           // cout<< "value deleted\n; 
-            return 0;
+            cout<<"value deleted\n";
+            return;
         }
         cur = cur->next;
-    }
-    while(cur != list);
-    cout<< "value not found\n";
+    } while(cur != list);
+    cout<<"value not found\n";
 }
 
 
@@ -185,7 +198,7 @@ int main(){
        case 1: { int value;
         cout << "Enter Your Value To Insert: ";
         cin >> value;
-        Insert(10);
+        Insert(value);
         break;
        }
 
@@ -200,17 +213,20 @@ int main(){
         break;
 
        case 4: {
-        BubbleSort(list);
+        BubbleSort();
+        display();
         break;
        }
 
        case 5: {
-        SelectionSort(list);
+        SelectionSort();
+        display();
         break;
        }
 
        case 6: {
-        InsertionSort(list);
+        InsertionSort();
+        display();
         break;
        }
 
