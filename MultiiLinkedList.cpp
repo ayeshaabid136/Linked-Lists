@@ -32,7 +32,7 @@ void InsertCourse(int CNo) {
     }
 }
 
-// 2. Delete a course (frees all students too)
+// 2. Delete a course (Deleting all students too)
 void DeleteCourse(int CNo) {
     CNODE* cur = CList;
     CNODE* prev = NULL;
@@ -115,8 +115,7 @@ void InsertStudentToCourse(int SNo, int CNo) {
     cout << "Course " << CNo << " not found\n";
 }
 
-// 6. Delete a student from ALL courses (if required by menu)
-//    (most assignments want delete from specific course → see function 7)
+// 6. Delete a student from ALL courses
 void DeleteStudentEverywhere(int SNo) {
     CNODE* course = CList;
     bool deleted = false;
@@ -252,7 +251,7 @@ void DisplayStudentsInCourse(int CNo) {
     cout << "Course " << CNo << " not found\n";
 }
 
-// 11. Display All (courses + their students)
+// 11. Display All 
 void DisplayAll() {
     if (CList == NULL) {
         cout << "No courses\n";
@@ -276,7 +275,7 @@ void DisplayAll() {
     }
 }
 
-// Main menu
+
 int main() {
     int choice, cno, sno;
 
