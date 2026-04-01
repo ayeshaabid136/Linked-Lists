@@ -10,7 +10,6 @@ Node *list = NULL;
 
 //Search
 Node* Search(int value){
-   // Node* cur = list;
     if(list == NULL){
         cout<<" Empty is List!\n";
         return NULL;
@@ -85,7 +84,7 @@ void Delete(int value){
         temp = temp->next;
     }
     if(count > 0){
-        cout<< "Duplicate value,Already Exist!" << count << "times\n";
+        cout<< "Duplicate value! " << count << " times\n";
         return;
     }
     
@@ -151,7 +150,7 @@ void SelectionSort(Node* list){
     for(Node* i=list; i; i=i->next){
         Node* min = i;
         for(Node* j=i->next; j; j=j->next){
-            if(j->data > min->data){
+            if(j->data < min->data){
                 min = j;
             }
             int temp = j->data;
